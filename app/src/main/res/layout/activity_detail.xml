@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorWhite"
+    tools:context=".activity.DetailActivity"
+    tools:ignore="ContentDescription">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_back_drop"
+            android:layout_width="match_parent"
+            android:layout_height="408dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/img_poster_desc"
+            android:scaleType="centerCrop"
+            android:src="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_bg_btn_circle"
+            android:contentDescription="@string/btn_back_desc"
+            android:padding="2dp"
+            android:src="@drawable/ic_arrow_white_24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_poster"
+            android:layout_width="200dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="24dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/img_poster_desc"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/img_back_drop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_border_color="@color/colorWhite"
+            app:riv_border_width="3dp"
+            app:riv_corner_radius="12dp"
+            tools:src="@color/colorAccent" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/img_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/img_poster" />
+
+        <ImageView
+            android:id="@+id/corner_shape"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="46dp"
+            android:background="@drawable/shape_rounded_corner_40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_poster" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_favorite_border_24dp"
+            android:tag="favorite_off"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_poster"
+            app:maxImageSize="36dp"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/circular_std_bold"
+            android:lineSpacingExtra="6dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorDarkFont"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fab_fav"
+            tools:text="Jumanji: The Next Level" />
+
+        <TextView
+            style="@style/ContentDetailBold"
+            android:id="@+id/txt_year"
+            android:layout_marginTop="8dp"
+            android:text="@string/dash_for_null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title"
+            tools:text="(2019)"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/ic_star"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/ic_star_desc"
+            android:src="@drawable/ic_star_gold_24dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <TextView
+            style="@style/ContentDetailBold"
+            android:id="@+id/txt_score"
+            android:text="@string/dash_for_null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ic_star"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="7.9/10"
+            tools:visibility="visible"/>
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:constraint_referenced_ids="ic_star,txt_score"
+            app:flow_horizontalGap="4dp"
+            app:flow_maxElementsWrap="2"
+            app:flow_wrapMode="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_year" />
+
+        <TextView
+            style="@style/ContentDetailBold"
+            android:id="@+id/lbl_overview"
+            android:text="@string/lbl_overview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flow_score"
+            tools:visibility="visible" />
+
+        <TextView
+            style="@style/ContentDetail"
+            android:id="@+id/txt_overview"
+            android:text="@string/not_available_yet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_overview"
+            tools:text="World class mobile and desktop creative apps. Get Creative Cloud! Memberships for everyone. All creative apps more. Free memberships trials. Step-by-step tutorials. Free product updates. Free trial downloads. Sync, store and share. Special offers." />
+
+        <TextView
+            style="@style/ContentDetailBold"
+            android:id="@+id/lbl_genre"
+            android:text="@string/lbl_genre"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_overview"
+            tools:visibility="visible" />
+
+        <TextView
+            style="@style/ContentDetail"
+            android:id="@+id/txt_genre"
+            android:text="@string/not_available_yet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_genre"
+            tools:text="Action, Animation, Fantasy, Adventure, Action, Animation, Fantasy, Adventure" />
+
+        <TextView
+            style="@style/ContentDetailBold"
+            android:id="@+id/lbl_runtime"
+            android:text="@string/lbl_runtime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_genre"
+            tools:visibility="visible" />
+
+        <TextView
+            style="@style/ContentDetail"
+            android:id="@+id/txt_runtime"
+            android:text="@string/not_available_yet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_runtime"
+            tools:text="100 minutes" />
+
+        <TextView
+            android:id="@+id/lbl_img_not_available"
+            style="@style/InfomartionError"
+            android:text="@string/image_is_not_available"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toTopOf="@+id/corner_shape"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/img_back_drop"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+

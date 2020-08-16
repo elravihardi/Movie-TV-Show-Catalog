@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App Favorit</string>
+    <string name="title_movie">Film</string>
+    <string name="title_tv">Acara TV</string>
+    <string name="title_favorite">Favorit</string>
+    <string name="detail_vote">%1$s/10</string>
+    <string name="list_contents">%1$s</string>
+    <string name="list_year">(%1$s)</string>
+    <string name="menu_title_lang_setting">Pengaturan Bahasa</string>
+    <string name="img_poster_desc">Ini adalah poster film atau acara tv</string>
+    <string name="ic_star_desc">Ini adalah ikon bintang</string>
+    <string name="fav_movie_empty">Belum ada Film favorit</string>
+    <string name="fav_tvshow_empty">Belum ada Acara TV favorit</string>
+    <string name="image_is_not_available">Gambar belum tersedia</string>
+    <string name="dash_for_null">-</string>
+    <string name="not_available_yet">Belum tersedia</string>
+</resources>

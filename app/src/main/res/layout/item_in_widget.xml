@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_main_view"
+    android:layout_width="296dp"
+    android:layout_height="192dp"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+    android:background="#DFDBDB"
+    android:padding="4dp">
+
+    <FrameLayout
+        android:layout_width="125dp"
+        android:layout_height="187dp">
+
+        <ImageView
+            android:id="@+id/img_poster"
+            android:layout_width="125dp"
+            android:layout_height="187dp"
+            android:contentDescription="@string/img_poster_desc"
+            android:src="@color/colorPrimaryDark"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/lbl_img_not_available"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
+            android:visibility="visible"
+            android:text="@string/image_is_not_available"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            tools:visibility="visible"
+            tools:ignore="RtlCompat" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorWhite"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/txt_title"
+            style="@style/MovieTitle"
+            android:textSize="18sp"
+            android:fontFamily="@font/circular_std_bold"
+            tools:text="Movie Title" />
+
+        <TextView
+            android:id="@+id/txt_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/dash_for_null"
+            android:fontFamily="@font/circular_std_bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15sp"
+            tools:text="(2018)" />
+
+        <TextView
+            android:id="@+id/txt_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:ellipsize="end"
+            android:lines="3"
+            android:text="@string/not_available_yet"
+            android:fontFamily="@font/inter_regular"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="3"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="13sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/ic_star"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="4dp"
+                android:contentDescription="@string/ic_star_desc"
+                android:src="@drawable/ic_star_gold_24dp"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/txt_score"
+                style="@style/ContentDetailBold"
+                android:layout_marginTop="0dp"
+                android:text="@string/dash_for_null"
+                android:textSize="13sp"
+                android:visibility="visible"
+                android:fontFamily="@font/circular_std_bold"
+                tools:text="7.9/10" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

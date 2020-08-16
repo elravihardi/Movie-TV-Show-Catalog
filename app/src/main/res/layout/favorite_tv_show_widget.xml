@@ -33,7 +33,7 @@
                 android:text="@string/fav_tvshow_widget_banner"
                 android:textColor="@color/colorAccent"
                 android:textSize="20sp"
-                android:fontFamily="@font/circular_std_bold"/>
+                android:fontFamily="@font/ibm_plex_sans_bold"/>
 
         </LinearLayout>
 
@@ -60,6 +60,6 @@
         android:textColor="@color/colorDarkFont"
         android:textSize="20sp"
         android:visibility="gone"
-        android:fontFamily="@font/circular_std_bold"/>
+        android:fontFamily="@font/ibm_plex_sans_bold"/>
 
 </FrameLayout>

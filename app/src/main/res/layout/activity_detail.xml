@@ -98,7 +98,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/circular_std_bold"
+            android:fontFamily="@font/ibm_plex_sans_bold"
             android:lineSpacingExtra="6dp"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"

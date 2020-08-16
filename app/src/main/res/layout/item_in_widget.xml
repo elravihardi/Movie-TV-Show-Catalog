@@ -46,7 +46,7 @@
             android:id="@+id/txt_title"
             style="@style/MovieTitle"
             android:textSize="18sp"
-            android:fontFamily="@font/circular_std_bold"
+            android:fontFamily="@font/ibm_plex_sans_bold"
             tools:text="Movie Title" />
 
         <TextView
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/dash_for_null"
-            android:fontFamily="@font/circular_std_bold"
+            android:fontFamily="@font/ibm_plex_sans_bold"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="15sp"
             tools:text="(2018)" />
@@ -98,7 +98,7 @@
                 android:text="@string/dash_for_null"
                 android:textSize="13sp"
                 android:visibility="visible"
-                android:fontFamily="@font/circular_std_bold"
+                android:fontFamily="@font/ibm_plex_sans_bold"
                 tools:text="7.9/10" />
 
         </LinearLayout>

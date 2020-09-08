@@ -11,30 +11,13 @@ This app using [Kotlin Coroutine](https://developer.android.com/kotlin/coroutine
 
 ## Some screenshots:
 
-**Popular Movie**
+<p align="center" width="100%">
+  <img width="32%" src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Popular%20Movies.png?raw=true">
+  <img width="32%" src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Popular%20TV%20Show.png?raw=true">
+  <img width="32%" src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Detail%20Of%20Movie.png?raw=true">
+</p></br>
 
-<img src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Popular%20Movies.png" width="400">
-
-**Popular TV Show**
-
-<img src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Popular%20TV%20Show.png" width="400">
-
-**Favorite Movies**
-
-<img src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Favorite%20Movies.png" width="400">
-
-**Released Today**
-
-<img src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Released%20Today.png" width="400">
-
-**Movie Detail**
-
-<img src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Detail%20Of%20Movie.png" width="400">
-
-**Result For Search Action**
-
-<img src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Search%20Result%20For%20Movie.png" width="400">
-
-**Reminder Setting**
-
-<img src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Setting%20For%20Release%20%26%20App%20Reminder.png" width="400">
+<p align="center" width="100%">
+  <img width="32%" src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Search%20Result%20For%20Movie.png?raw=true">
+  <img width="32%" src="https://github.com/elravihardi/Movie-TV-Show-Catalog/blob/master/screenshot/Setting%20For%20Release%20%26%20App%20Reminder.png?raw=true">
+</p>

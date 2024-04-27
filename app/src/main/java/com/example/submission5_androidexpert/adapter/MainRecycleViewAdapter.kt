@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.submission5_androidexpert.R
+import com.example.submission5_androidexpert.databinding.ItemInRvBinding
 import com.example.submission5_androidexpert.model.Movie
 import com.example.submission5_androidexpert.model.TvShow
 import com.example.submission5_androidexpert.retrofit.posterURL
-import kotlinx.android.synthetic.main.item_in_rv.view.*
 
 interface OnMovieItemClickCallback {
     fun onItemClicked(data: Movie)
@@ -89,78 +89,80 @@ class MainRecycleViewAdapter(private val index: Int):
     }
 
     class MainListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ItemInRvBinding.bind(itemView)
+        private val context = itemView.context
         fun bindMovies(movie: Movie) {
-            with(itemView) {
-                btn_delete.visibility = View.INVISIBLE
+            with(binding) {
+                btnDelete.visibility = View.INVISIBLE
                 if (!movie.title.isNullOrBlank()) {
-                    txt_title.text = String.format(
+                    txtTitle.text = String.format(
                         context.resources.getString(R.string.list_contents),
                         movie.title)
                 }
                 if (!movie.releaseDate.isNullOrBlank()) {
-                    txt_year.text = String.format(
+                    txtYear.text = String.format(
                         context.resources.getString(R.string.list_year),
                         movie.releaseDate.substring(0, 4))
                 }
                 if (!movie.overview.isNullOrBlank()) {
-                    txt_overview.text = String.format(
+                    txtOverview.text = String.format(
                         context.resources.getString(R.string.list_contents),
                         movie.overview)
                 }
                 if (movie.voteAverage != 0f) {
-                    txt_score.text = String.format(
+                    txtScore.text = String.format(
                         context.resources.getString(R.string.detail_vote),
                         movie.voteAverage.toString()
                     )
                 }
                 if (!movie.posterPath.isNullOrBlank()) {
-                    lbl_img_not_available.visibility = View.INVISIBLE
+                    lblImgNotAvailable.visibility = View.INVISIBLE
                     Glide.with(context)
                         .load(posterURL + movie.posterPath)
-                        .into(img_poster)
+                        .into(imgPoster)
                 } else {
                     Glide.with(context)
                         .load(R.drawable.shape_img_not_available)
-                        .into(img_poster)
-                    lbl_img_not_available.visibility = View.VISIBLE
+                        .into(imgPoster)
+                    lblImgNotAvailable.visibility = View.VISIBLE
                 }
             }
         }
 
         fun bindTvShows(tvshow: TvShow) {
-            with(itemView) {
-                btn_delete.visibility = View.INVISIBLE
+            with(binding) {
+                btnDelete.visibility = View.INVISIBLE
                 if (!tvshow.name.isNullOrBlank()) {
-                    txt_title.text = String.format(
+                    txtTitle.text = String.format(
                         context.resources.getString(R.string.list_contents),
                         tvshow.name)
                 }
                 if (!tvshow.firstAirDate.isNullOrBlank()) {
-                    txt_year.text = String.format(
+                    txtYear.text = String.format(
                         context.resources.getString(R.string.list_year),
                         tvshow.firstAirDate.substring(0, 4))
                 }
                 if (!tvshow.overview.isNullOrBlank()) {
-                    txt_overview.text = String.format(
+                    txtOverview.text = String.format(
                         context.resources.getString(R.string.list_contents),
                         tvshow.overview)
                 }
                 if (tvshow.voteAverage != 0f) {
-                    txt_score.text = String.format(
+                    txtScore.text = String.format(
                         context.resources.getString(R.string.detail_vote),
                         tvshow.voteAverage.toString()
                     )
                 }
                 if (!tvshow.posterPath.isNullOrBlank()) {
-                    lbl_img_not_available.visibility = View.INVISIBLE
+                    lblImgNotAvailable.visibility = View.INVISIBLE
                     Glide.with(context)
                         .load(posterURL + tvshow.posterPath)
-                        .into(img_poster)
+                        .into(imgPoster)
                 } else {
                     Glide.with(context)
                         .load(R.drawable.shape_img_not_available)
-                        .into(img_poster)
-                    lbl_img_not_available.visibility = View.VISIBLE
+                        .into(imgPoster)
+                    lblImgNotAvailable.visibility = View.VISIBLE
                 }
             }
         }

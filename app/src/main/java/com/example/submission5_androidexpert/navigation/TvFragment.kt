@@ -16,34 +16,36 @@ import com.example.submission5_androidexpert.R
 import com.example.submission5_androidexpert.activity.DetailActivity
 import com.example.submission5_androidexpert.adapter.MainRecycleViewAdapter
 import com.example.submission5_androidexpert.adapter.OnTvShowItemClickCallback
+import com.example.submission5_androidexpert.databinding.FragmentMainBinding
 import com.example.submission5_androidexpert.model.TvShow
 import com.example.submission5_androidexpert.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class TvFragment : Fragment(){
     private val recycleViewAdapter: MainRecycleViewAdapter = MainRecycleViewAdapter(1)
     private val viewModel: MainViewModel by activityViewModels()
 
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         viewModel.getTvShowList().observe(viewLifecycleOwner, tvshowObserver)
         viewModel.tvshowRequestError?.observe(viewLifecycleOwner, errorMessageObserver)
-        view.swipeContainer.setOnRefreshListener {
+        binding.swipeContainer.setOnRefreshListener {
             viewModel.resetTvShowLiveData()
             refreshTvShowData()
         }
-        view.swipeContainer.setColorSchemeResources(R.color.colorAccent, R.color.colorGray)
-        view.recycle_view.layoutManager = LinearLayoutManager(view.context)
-        view.recycle_view.adapter = recycleViewAdapter
-        return view
+        binding.swipeContainer.setColorSchemeResources(R.color.colorAccent, R.color.colorGray)
+        binding.recycleView.layoutManager = LinearLayoutManager(context)
+        binding.recycleView.adapter = recycleViewAdapter
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.tvshowLayoutManagerState?.observe(viewLifecycleOwner, Observer { state ->
             if (state != null)
-                this.recycle_view.layoutManager?.onRestoreInstanceState(state)
+                binding.recycleView.layoutManager?.onRestoreInstanceState(state)
         })
         recycleViewAdapter.setOnTvShowItemClickCallback(object: OnTvShowItemClickCallback{
             override fun onItemClicked(data: TvShow) {
@@ -56,34 +58,34 @@ class TvFragment : Fragment(){
     }
 
     private fun refreshTvShowData() {
-        progress_bar.visibility = View.VISIBLE
-        txt_error_message.visibility = View.INVISIBLE
+        binding.progressBar.visibility = View.VISIBLE
+        binding.txtErrorMessage.visibility = View.INVISIBLE
         recycleViewAdapter.clearTvShowsData()
-        recycle_view.Recycler().clear()
-        recycle_view.recycledViewPool.clear()
-        recycle_view.layoutManager?.removeAllViews()
+        binding.recycleView.Recycler().clear()
+        binding.recycleView.recycledViewPool.clear()
+        binding.recycleView.layoutManager?.removeAllViews()
         viewModel.getTvShowList().observe(viewLifecycleOwner, tvshowObserver)
         viewModel.tvshowRequestError?.observe(viewLifecycleOwner, errorMessageObserver)
-        swipeContainer.isRefreshing = false
+        binding.swipeContainer.isRefreshing = false
     }
 
     private val tvshowObserver = Observer<ArrayList<TvShow>> { tvShowList ->
         if (!tvShowList.isNullOrEmpty()) {
             recycleViewAdapter.setTvShowsData(tvShowList)
-            progress_bar.visibility = View.INVISIBLE
-            txt_error_message.visibility = View.INVISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.txtErrorMessage.visibility = View.INVISIBLE
         }
     }
 
     private val errorMessageObserver = Observer<Int> { errorCode ->
         if (errorCode != null) {
-            progress_bar.visibility = View.INVISIBLE
-            txt_error_message.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.txtErrorMessage.visibility = View.VISIBLE
             when (errorCode){
-                1 -> txt_error_message.text = activity?.resources?.getString(R.string.error_conn_message)
-                401 -> txt_error_message.text = activity?.resources?.getString(R.string.invalid_api_key)
-                404 -> txt_error_message.text = activity?.resources?.getString(R.string.tvshow_error404_message)
-                else -> txt_error_message.text = activity?.resources?.getString(R.string.server_error)
+                1 -> binding.txtErrorMessage.text = activity?.resources?.getString(R.string.error_conn_message)
+                401 -> binding.txtErrorMessage.text = activity?.resources?.getString(R.string.invalid_api_key)
+                404 -> binding.txtErrorMessage.text = activity?.resources?.getString(R.string.tvshow_error404_message)
+                else -> binding.txtErrorMessage.text = activity?.resources?.getString(R.string.server_error)
             }
         }
     }
@@ -91,7 +93,7 @@ class TvFragment : Fragment(){
     override fun onDestroyView() {
         super.onDestroyView()
         // Save scroll position on Recycler View
-        val layoutManagerState = this.recycle_view.layoutManager?.onSaveInstanceState()
+        val layoutManagerState = this.binding.recycleView.layoutManager?.onSaveInstanceState()
         viewModel.setTvShowLayoutManagerState(layoutManagerState)
     }
 }

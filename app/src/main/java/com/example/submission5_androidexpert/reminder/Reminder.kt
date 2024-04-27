@@ -20,7 +20,7 @@ class Reminder(private val context: Context) {
             context,
             ID_DAILY_ALARM,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 7)
@@ -45,7 +45,7 @@ class Reminder(private val context: Context) {
             context,
             ID_RELEASE_ALARM,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 8)
@@ -70,7 +70,8 @@ class Reminder(private val context: Context) {
             context,
             requestCode,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
         pendingIntent.cancel()
         alarmManager.cancel(pendingIntent)
     }

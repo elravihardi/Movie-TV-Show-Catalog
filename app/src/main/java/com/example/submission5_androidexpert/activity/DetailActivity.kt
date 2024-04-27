@@ -17,12 +17,12 @@ import com.example.submission5_androidexpert.ConstantVariable.Companion.EXTRA_TV
 import com.example.submission5_androidexpert.ConstantVariable.Companion.MOVIE
 import com.example.submission5_androidexpert.ConstantVariable.Companion.TVSHOW
 import com.example.submission5_androidexpert.R
+import com.example.submission5_androidexpert.databinding.ActivityDetailBinding
 import com.example.submission5_androidexpert.model.Detail
 import com.example.submission5_androidexpert.retrofit.backdropURL
 import com.example.submission5_androidexpert.retrofit.posterURL
 import com.example.submission5_androidexpert.viewmodel.DetailViewModel
 import com.example.submission5_androidexpert.viewmodel.FavoriteViewModel
-import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
 
@@ -31,10 +31,12 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var detail: Detail
     private var movieID: Int? = null
     private var tvshowID: Int? = null
-
+    private lateinit var binding: ActivityDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         detailViewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
         favoriteViewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
 
@@ -60,8 +62,8 @@ class DetailActivity : AppCompatActivity() {
                 if (errorCode != null) { showErrorMessage(errorCode) }
             })
         }
-        btn_back.setOnClickListener { finish() }
-        fab_fav.setOnClickListener { setFavorite() }
+        binding.btnBack.setOnClickListener { finish() }
+        binding.fabFav.setOnClickListener { setFavorite() }
     }
 
     private val contentDetailObserver = Observer<Detail> { detail ->
@@ -70,53 +72,53 @@ class DetailActivity : AppCompatActivity() {
             this@DetailActivity.detail = detail
             with(detail){
                 if(title != null) {
-                    txt_title.text = String.format(
+                    binding.txtTitle.text = String.format(
                         applicationContext.resources.getString(R.string.detail_title),
                         title)
                     if (!releaseDate.isNullOrBlank()) {
-                        txt_year.text = String.format(
+                        binding.txtYear.text = String.format(
                             applicationContext.resources.getString(R.string.list_year),
                             releaseDate.substring(0, 4))
                     }
                     if (!runtime.isNullOrBlank() && runtime != "0") {
-                        txt_runtime.text = String.format(
+                        binding.txtRuntime.text = String.format(
                             applicationContext.resources.getString(R.string.detail_runtime),
                             runtime)
                     }
                 } else {
-                    txt_title.text = String.format(
+                    binding.txtTitle.text = String.format(
                         applicationContext.resources.getString(R.string.detail_title),
                         name)
                     if (!firstAirDate.isNullOrBlank()) {
-                        txt_year.text = String.format(
+                        binding.txtYear.text = String.format(
                             applicationContext.resources.getString(R.string.list_year),
                             firstAirDate.substring(0, 4))
                     }
-                    lbl_runtime.text = applicationContext.resources.getString(R.string.lbl_episode_runtime)
+                    binding.lblRuntime.text = applicationContext.resources.getString(R.string.lbl_episode_runtime)
                     episodeRuntime?.let {
                         if (episodeRuntime.size > 0) {
                             var mEpisodeRuntimes = ""
                             episodeRuntime.forEach{
                                 mEpisodeRuntimes += "$it, "
                             }
-                            txt_runtime.text = String.format(
+                            binding.txtRuntime.text = String.format(
                                 applicationContext.resources.getString(R.string.detail_runtime),
                                 mEpisodeRuntimes.substringBeforeLast(','))
                         }
                     }
                 }
                 if (backdropPath.isNullOrBlank() && posterPath.isNullOrBlank())
-                    lbl_img_not_available.visibility = View.VISIBLE
+                    binding.lblImgNotAvailable.visibility = View.VISIBLE
                 if (!backdropPath.isNullOrBlank()) {
                     Glide.with(this@DetailActivity)
                         .load(backdropURL + backdropPath)
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .override(Target.SIZE_ORIGINAL)
-                        .into(img_back_drop)
+                        .into(binding.imgBackDrop)
                 } else {
                     Glide.with(this@DetailActivity)
                         .load(R.drawable.shape_img_not_available)
-                        .into(img_back_drop)
+                        .into(binding.imgBackDrop)
                 }
 
                 if (!posterPath.isNullOrBlank()) {
@@ -124,16 +126,16 @@ class DetailActivity : AppCompatActivity() {
                         .load(posterURL + posterPath)
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .override(Target.SIZE_ORIGINAL)
-                        .into(img_poster)
+                        .into(binding.imgPoster)
                 } else {
-                    img_poster.visibility = View.INVISIBLE
+                    binding.imgPoster.visibility = View.INVISIBLE
                 }
                 if (voteAverage != 0f) {
-                    txt_score.text = String.format(
+                    binding.txtScore.text = String.format(
                         applicationContext.resources.getString(R.string.detail_vote),
                         voteAverage.toString())
                 }
-                if (!overview.isNullOrBlank()) txt_overview.text = overview
+                if (!overview.isNullOrBlank()) binding.txtOverview.text = overview
 
                 genres?.let {
                     if (genres.size > 0) {
@@ -141,7 +143,7 @@ class DetailActivity : AppCompatActivity() {
                         genres.forEach {
                             genre += "${it.name}, "
                         }
-                        txt_genre.text = String.format(
+                        binding.txtGenre.text = String.format(
                             applicationContext.resources.getString(R.string.detail_genre),
                             genre.substringBeforeLast(','))
                     }
@@ -152,18 +154,18 @@ class DetailActivity : AppCompatActivity() {
 
     @SuppressLint("RestrictedApi")
     private fun setItemsToVisible(){
-        progress_bar.visibility = View.INVISIBLE
-        ic_star.visibility = View.VISIBLE
-        txt_score.visibility = View.VISIBLE
-        fab_fav.visibility = View.VISIBLE
-        txt_year.visibility = View.VISIBLE
-        lbl_overview.visibility = View.VISIBLE
-        lbl_runtime.visibility = View.VISIBLE
-        lbl_genre.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.INVISIBLE
+        binding.icStar.visibility = View.VISIBLE
+        binding.txtScore.visibility = View.VISIBLE
+        binding.fabFav.visibility = View.VISIBLE
+        binding.txtYear.visibility = View.VISIBLE
+        binding.lblOverview.visibility = View.VISIBLE
+        binding.lblRuntime.visibility = View.VISIBLE
+        binding.lblGenre.visibility = View.VISIBLE
     }
 
     private fun showErrorMessage(errorCode: Int?) {
-        main_view.visibility = View.INVISIBLE
+        binding.mainView.visibility = View.INVISIBLE
         when (errorCode) {
             1 -> Toast.makeText(this, getString(R.string.error_conn_message), Toast.LENGTH_LONG).show()
             401 -> Toast.makeText(this, getString(R.string.invalid_api_key), Toast.LENGTH_LONG).show()
@@ -180,17 +182,17 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setBtnFavoriteOn() {
-        fab_fav.setImageResource(R.drawable.ic_favorite_fill_white_24dp)
-        fab_fav.tag = "favorite_on"
+        binding.fabFav.setImageResource(R.drawable.ic_favorite_fill_white_24dp)
+        binding.fabFav.tag = "favorite_on"
     }
 
     private fun setBtnFavoriteOff() {
-        fab_fav.setImageResource(R.drawable.ic_favorite_border_24dp)
-        fab_fav.tag = "favorite_off"
+        binding.fabFav.setImageResource(R.drawable.ic_favorite_border_24dp)
+        binding.fabFav.tag = "favorite_off"
     }
 
     private fun setFavorite() {
-        if(fab_fav.tag.toString() == "favorite_off"){
+        if(binding.fabFav.tag.toString() == "favorite_off"){
             // The Favorite Button is Off
             setBtnFavoriteOn()
             if (detail.title != null) {

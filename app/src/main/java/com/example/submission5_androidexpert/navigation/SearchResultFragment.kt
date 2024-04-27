@@ -17,107 +17,107 @@ import com.example.submission5_androidexpert.ConstantVariable.Companion.SEARCH_Q
 import com.example.submission5_androidexpert.ConstantVariable.Companion.TVSHOW
 import com.example.submission5_androidexpert.R
 import com.example.submission5_androidexpert.activity.DetailActivity
+import com.example.submission5_androidexpert.activity.MainActivity
 import com.example.submission5_androidexpert.adapter.MainRecycleViewAdapter
 import com.example.submission5_androidexpert.adapter.OnMovieItemClickCallback
 import com.example.submission5_androidexpert.adapter.OnTvShowItemClickCallback
+import com.example.submission5_androidexpert.databinding.FragmentMainBinding
 import com.example.submission5_androidexpert.model.Movie
 import com.example.submission5_androidexpert.model.TvShow
 import com.example.submission5_androidexpert.viewmodel.SearchViewModel
-import kotlinx.android.synthetic.main.activity_reminder_setting.*
-import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class SearchResultFragment : Fragment() {
     private lateinit var recycleViewAdapter: MainRecycleViewAdapter
     private val viewModel: SearchViewModel by activityViewModels()
     private var kindOfContent: String? = null
-
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         kindOfContent  = arguments?.getString(EXTRA_KIND_OF_CONTENT)
         val searchQuery = arguments?.getString(SEARCH_QUERY)
-        activity?.toolbar?.title = searchQuery
+        (requireActivity() as? MainActivity)?.setTitle(searchQuery)
         when (kindOfContent) {
             MOVIE -> {
                 recycleViewAdapter = MainRecycleViewAdapter(0)
-                view.recycle_view.adapter = recycleViewAdapter
+                binding.recycleView.adapter = recycleViewAdapter
                 searchQuery?.let {
                     viewModel.searchMovie(it).observe(viewLifecycleOwner, moviesObserver)
                     viewModel.searchError?.observe(viewLifecycleOwner, errorMessageObserver)
                 }
-                view.swipeContainer.setOnRefreshListener {
+                binding.swipeContainer.setOnRefreshListener {
                     viewModel.resetLiveData()
                     searchQuery?.let { refreshMovieData(it) }
                 }
             }
             TVSHOW -> {
                 recycleViewAdapter = MainRecycleViewAdapter(1)
-                view.recycle_view.adapter = recycleViewAdapter
+                binding.recycleView.adapter = recycleViewAdapter
                 searchQuery?.let {
                     viewModel.searchTvShow(it).observe(viewLifecycleOwner, tvshowObserver)
                     viewModel.searchError?.observe(viewLifecycleOwner, errorMessageObserver)
                 }
-                view.swipeContainer.setOnRefreshListener {
+                binding.swipeContainer.setOnRefreshListener {
                     viewModel.resetLiveData()
                     searchQuery?.let { refreshTvShowData(it) }
                 }
             }
         }
-        view.swipeContainer.setColorSchemeResources(R.color.colorAccent, R.color.colorGray)
-        view.recycle_view.layoutManager = LinearLayoutManager(view.context)
-        return view
+        binding.swipeContainer.setColorSchemeResources(R.color.colorAccent, R.color.colorGray)
+        binding.recycleView.layoutManager = LinearLayoutManager(context)
+        return binding.root
     }
 
     private fun refreshMovieData(query: String) {
-        progress_bar.visibility = View.VISIBLE
-        txt_error_message.visibility = View.INVISIBLE
+        binding.progressBar.visibility = View.VISIBLE
+        binding.txtErrorMessage.visibility = View.INVISIBLE
         recycleViewAdapter.clearMoviesData()
-        recycle_view.Recycler().clear()
-        recycle_view.recycledViewPool.clear()
-        recycle_view.layoutManager?.removeAllViews()
+        binding.recycleView.Recycler().clear()
+        binding.recycleView.recycledViewPool.clear()
+        binding.recycleView.layoutManager?.removeAllViews()
         viewModel.searchMovie(query).observe(viewLifecycleOwner, moviesObserver)
         viewModel.searchError?.observe(viewLifecycleOwner, errorMessageObserver)
-        swipeContainer.isRefreshing = false
+        binding.swipeContainer.isRefreshing = false
     }
 
     private fun refreshTvShowData(query: String) {
-        progress_bar.visibility = View.VISIBLE
-        txt_error_message.visibility = View.INVISIBLE
+        binding.progressBar.visibility = View.VISIBLE
+        binding.txtErrorMessage.visibility = View.INVISIBLE
         recycleViewAdapter.clearTvShowsData()
-        recycle_view.Recycler().clear()
-        recycle_view.recycledViewPool.clear()
-        recycle_view.layoutManager?.removeAllViews()
+        binding.recycleView.Recycler().clear()
+        binding.recycleView.recycledViewPool.clear()
+        binding.recycleView.layoutManager?.removeAllViews()
         viewModel.searchTvShow(query).observe(viewLifecycleOwner, tvshowObserver)
         viewModel.searchError?.observe(viewLifecycleOwner, errorMessageObserver)
-        swipeContainer.isRefreshing = false
+        binding.swipeContainer.isRefreshing = false
     }
 
     private val moviesObserver = Observer<ArrayList<Movie>> { movieList ->
         if (!movieList.isNullOrEmpty()) {
             recycleViewAdapter.setMoviesData(movieList)
-            progress_bar.visibility = View.INVISIBLE
-            txt_error_message.visibility = View.INVISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.txtErrorMessage.visibility = View.INVISIBLE
         }
     }
 
     private val tvshowObserver = Observer<ArrayList<TvShow>> { tvShowList ->
         if (!tvShowList.isNullOrEmpty()) {
             recycleViewAdapter.setTvShowsData(tvShowList)
-            progress_bar.visibility = View.INVISIBLE
-            txt_error_message.visibility = View.INVISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.txtErrorMessage.visibility = View.INVISIBLE
         }
     }
 
     private val errorMessageObserver = Observer<Int> { errorCode ->
         if (errorCode != null) {
-            progress_bar.visibility = View.INVISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
             when (errorCode){
-                1 -> txt_error_message.text = activity?.resources?.getString(R.string.error_conn_message)
-                200 -> txt_error_message.text = activity?.resources?.getString(R.string.search_not_found)
-                401 -> txt_error_message.text = activity?.resources?.getString(R.string.invalid_api_key)
-                else -> txt_error_message.text = activity?.resources?.getString(R.string.server_error)
+                1 -> binding.txtErrorMessage.text = activity?.resources?.getString(R.string.error_conn_message)
+                200 -> binding.txtErrorMessage.text = activity?.resources?.getString(R.string.search_not_found)
+                401 -> binding.txtErrorMessage.text = activity?.resources?.getString(R.string.invalid_api_key)
+                else -> binding.txtErrorMessage.text = activity?.resources?.getString(R.string.server_error)
             }
-            txt_error_message.visibility = View.VISIBLE
+            binding.txtErrorMessage.visibility = View.VISIBLE
         }
     }
 

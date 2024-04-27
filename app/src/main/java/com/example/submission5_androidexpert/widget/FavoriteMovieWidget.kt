@@ -38,7 +38,7 @@ class FavoriteMovieWidget : AppWidgetProvider() {
                 context,
                 1,
                 intentToMain,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.banner_view, pendingIntent1)
 
@@ -51,7 +51,7 @@ class FavoriteMovieWidget : AppWidgetProvider() {
                 context,
                 2,
                 intentToDetail,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setPendingIntentTemplate(R.id.stack_view, pendingIntent2)
 

@@ -10,9 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.favoriteconsumerapp.R
 import com.example.favoriteconsumerapp.adapter.RecycleViewAdapter
+import com.example.favoriteconsumerapp.databinding.FragmentTabsBinding
 import com.example.favoriteconsumerapp.viewmodel.Viewmodel
-import kotlinx.android.synthetic.main.fragment_tabs.*
-import kotlinx.android.synthetic.main.fragment_tabs.view.*
 
 class FavTabsFragment: Fragment() {
 
@@ -32,8 +31,10 @@ class FavTabsFragment: Fragment() {
     private lateinit var favTvShowAdapter: RecycleViewAdapter
     private lateinit var viewModel: Viewmodel
 
+    private var _binding: FragmentTabsBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_tabs, container, false)
+        _binding = FragmentTabsBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(Viewmodel::class.java)
         if (arguments != null) {
             val index = arguments?.getInt(FAV_ARG_SECTION_NUMBER, 0) as Int
@@ -42,33 +43,33 @@ class FavTabsFragment: Fragment() {
                 viewModel.getAllFavMovies()?.observe(viewLifecycleOwner, Observer { favMovies ->
                     if (!favMovies.isNullOrEmpty()){
                         favMovieAdapter.setFavMoviesData(favMovies)
-                        progress_bar.visibility = View.INVISIBLE
-                        txt_error_msg.visibility = View.INVISIBLE
+                        binding.progressBar.visibility = View.INVISIBLE
+                        binding.txtErrorMsg.visibility = View.INVISIBLE
                     } else {
-                        progress_bar.visibility = View.INVISIBLE
-                        txt_error_msg.visibility = View.VISIBLE
-                        txt_error_msg.text = activity?.resources?.getString(R.string.fav_movie_empty)
+                        binding.progressBar.visibility = View.INVISIBLE
+                        binding.txtErrorMsg.visibility = View.VISIBLE
+                        binding.txtErrorMsg.text = activity?.resources?.getString(R.string.fav_movie_empty)
                     }
                 })
-                view.recycle_view.adapter = favMovieAdapter
-                view.recycle_view.layoutManager = LinearLayoutManager(view.context)
+                binding.recycleView.adapter = favMovieAdapter
+                binding.recycleView.layoutManager = LinearLayoutManager(context)
             } else {
                 favTvShowAdapter = RecycleViewAdapter(index)
                 viewModel.getAllFavTvShows()?.observe(viewLifecycleOwner, Observer { favTvShows ->
                     if (!favTvShows.isNullOrEmpty()){
                         favTvShowAdapter.setFavTvShowsData(favTvShows)
-                        progress_bar.visibility = View.INVISIBLE
-                        txt_error_msg.visibility = View.INVISIBLE
+                        binding.progressBar.visibility = View.INVISIBLE
+                        binding.txtErrorMsg.visibility = View.INVISIBLE
                     } else {
-                        progress_bar.visibility = View.INVISIBLE
-                        txt_error_msg.visibility = View.VISIBLE
-                        txt_error_msg.text = activity?.resources?.getString(R.string.fav_tvshow_empty)
+                        binding.progressBar.visibility = View.INVISIBLE
+                        binding.txtErrorMsg.visibility = View.VISIBLE
+                        binding.txtErrorMsg.text = activity?.resources?.getString(R.string.fav_tvshow_empty)
                     }
                 })
-                view.recycle_view.adapter = favTvShowAdapter
-                view.recycle_view.layoutManager = LinearLayoutManager(view.context)
+                binding.recycleView.adapter = favTvShowAdapter
+                binding.recycleView.layoutManager = LinearLayoutManager(context)
             }
         }
-        return view
+        return binding.root
     }
 }

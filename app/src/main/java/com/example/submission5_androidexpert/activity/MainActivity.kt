@@ -30,12 +30,11 @@ import com.example.submission5_androidexpert.ConstantVariable.Companion.MOVIE
 import com.example.submission5_androidexpert.ConstantVariable.Companion.SEARCH_QUERY
 import com.example.submission5_androidexpert.ConstantVariable.Companion.TVSHOW
 import com.example.submission5_androidexpert.R
+import com.example.submission5_androidexpert.databinding.ActivityMainBinding
 import com.example.submission5_androidexpert.viewmodel.FavoriteViewModel
 import com.example.submission5_androidexpert.viewmodel.MainViewModel
 import com.example.submission5_androidexpert.viewmodel.SearchViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
@@ -46,9 +45,13 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     private lateinit var searchViewModel: SearchViewModel
     private var currentDestination: Int? = null
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.title = null
         ViewModelProvider(this).get(FavoriteViewModel::class.java)
@@ -68,15 +71,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         navController.addOnDestinationChangedListener(this)
         currentDestination = navController.currentDestination?.id
 
-        // Recycler view will scroll to top when user click on toolbar or title (except for Fav Fragment)
-        toolbar.setOnClickListener{
-            val recyclerView = supportFragmentManager
+        // Recycler view will scroll to top when user click on binding.toolbar or title (except for Fav Fragment)
+        binding.toolbar.setOnClickListener{
+            /*val recyclerView = supportFragmentManager
                 .findFragmentById(R.id.nav_host_fragment)?.recycle_view
             if (currentDestination != R.id.nav_fav)
-                recyclerView?.scrollToPosition(0)
+                recyclerView?.scrollToPosition(0)*/
         }
         // Set action on Toolbar's button UP when SearchResult Fragment show up
-        toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             searchViewModel.resetLiveData()
             onBackPressed()
         }
@@ -121,7 +124,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchMenu = menu.findItem(R.id.search).actionView as SearchView
         searchMenu.apply {
-            maxWidth = toolbar.width
+            maxWidth = binding.toolbar.width
             isIconified = true
             setOnSearchClickListener {
                 when (currentDestination) {
@@ -173,14 +176,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         currentDestination = destination.id
         when (currentDestination) {
-            R.id.nav_movie -> toolbar.title = this.resources.getString(R.string.main_title_movie)
-            R.id.nav_tv -> toolbar.title = this.resources.getString(R.string.main_title_tv)
-            R.id.nav_fav -> toolbar.title = this.resources.getString(R.string.title_favorite)
-            R.id.nav_release -> toolbar?.title = this.resources.getString(R.string.main_title_release)
+            R.id.nav_movie -> binding.toolbar.title = this.resources.getString(R.string.main_title_movie)
+            R.id.nav_tv -> binding.toolbar.title = this.resources.getString(R.string.main_title_tv)
+            R.id.nav_fav -> binding.toolbar.title = this.resources.getString(R.string.title_favorite)
+            R.id.nav_release -> binding.toolbar?.title = this.resources.getString(R.string.main_title_release)
         }
         // Show search menu on Movie or TV Show fragment
-        if (toolbar.menu.size() > 0)
-            toolbar.menu[0].isVisible = !(currentDestination == R.id.nav_fav || currentDestination == R.id.nav_release)
+        if (binding.toolbar.menu.size() > 0)
+            binding.toolbar.menu[0].isVisible = !(currentDestination == R.id.nav_fav || currentDestination == R.id.nav_release)
         // Hide navView on Search Fragemnt
         navView.isVisible = (currentDestination != R.id.nav_search)
     }
@@ -199,5 +202,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun setTitle(query: String) {
+        binding.toolbar.title = query
     }
 }

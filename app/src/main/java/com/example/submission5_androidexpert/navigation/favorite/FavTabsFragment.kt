@@ -19,11 +19,10 @@ import com.example.submission5_androidexpert.ConstantVariable.Companion.TVSHOW
 import com.example.submission5_androidexpert.R
 import com.example.submission5_androidexpert.activity.DetailActivity
 import com.example.submission5_androidexpert.adapter.*
+import com.example.submission5_androidexpert.databinding.FragmentMainBinding
 import com.example.submission5_androidexpert.room.FavoriteMovie
 import com.example.submission5_androidexpert.room.FavoriteTvShow
 import com.example.submission5_androidexpert.viewmodel.FavoriteViewModel
-import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class FavTabsFragment: Fragment() {
 
@@ -40,51 +39,52 @@ class FavTabsFragment: Fragment() {
             return fragment
         }
     }
-
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
-        view.swipeContainer.setOnRefreshListener {
-            view.swipeContainer.isRefreshing = false
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding.swipeContainer.setOnRefreshListener {
+            binding.swipeContainer.isRefreshing = false
         }
-        view.swipeContainer.setColorSchemeResources(R.color.colorAccent, R.color.colorGray)
+        binding.swipeContainer.setColorSchemeResources(R.color.colorAccent, R.color.colorGray)
         if (arguments != null) {
             val index = arguments?.getInt(FAV_ARG_SECTION_NUMBER, 0) as Int
             if (index == 0) {
                 favoriteRecycleViewAdapter = FavoriteRecycleViewAdapter(index)
                 favoriteViewModel.getAllFavMovies().observe(viewLifecycleOwner, favMoviesObserver)
-                view.recycle_view.adapter = favoriteRecycleViewAdapter
-                view.recycle_view.layoutManager = LinearLayoutManager(view.context)
+                binding.recycleView.adapter = favoriteRecycleViewAdapter
+                binding.recycleView.layoutManager = LinearLayoutManager(context)
             } else {
                 favoriteViewModel.getAllFavTvShows().observe(viewLifecycleOwner, favTvShowsObserver)
                 favoriteRecycleViewAdapter = FavoriteRecycleViewAdapter(index)
-                view.recycle_view.adapter = favoriteRecycleViewAdapter
-                view.recycle_view.layoutManager = LinearLayoutManager(view.context)
+                binding.recycleView.adapter = favoriteRecycleViewAdapter
+                binding.recycleView.layoutManager = LinearLayoutManager(context)
             }
         }
-        return view
+        return binding.root
     }
 
     private val favMoviesObserver = Observer<List<FavoriteMovie>> { favMovieList ->
         favoriteRecycleViewAdapter?.setFavMoviesData(favMovieList)
         if (!favMovieList.isNullOrEmpty()) {
-            progress_bar.visibility = View.INVISIBLE
-            txt_error_message.visibility = View.INVISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.txtErrorMessage.visibility = View.INVISIBLE
         } else {
-            progress_bar.visibility = View.INVISIBLE
-            txt_error_message.text = activity?.resources?.getString(R.string.fav_movie_empty)
-            txt_error_message.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.txtErrorMessage.text = activity?.resources?.getString(R.string.fav_movie_empty)
+            binding.txtErrorMessage.visibility = View.VISIBLE
         }
     }
 
     private val favTvShowsObserver = Observer<List<FavoriteTvShow>> { favTvShowList ->
         favoriteRecycleViewAdapter?.setFavTvShowsData(favTvShowList)
         if (!favTvShowList.isNullOrEmpty()) {
-            progress_bar.visibility = View.INVISIBLE
-            txt_error_message.visibility = View.INVISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.txtErrorMessage.visibility = View.INVISIBLE
         } else {
-            progress_bar.visibility = View.INVISIBLE
-            txt_error_message.text = activity?.resources?.getString(R.string.fav_tvshow_empty)
-            txt_error_message.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.INVISIBLE
+            binding.txtErrorMessage.text = activity?.resources?.getString(R.string.fav_tvshow_empty)
+            binding.txtErrorMessage.visibility = View.VISIBLE
         }
     }
 

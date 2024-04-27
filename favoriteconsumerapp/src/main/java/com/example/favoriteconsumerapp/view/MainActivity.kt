@@ -11,28 +11,30 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.example.favoriteconsumerapp.R
 import com.example.favoriteconsumerapp.adapter.FavoritePagerAdapter
+import com.example.favoriteconsumerapp.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_tabs.view.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.title = this.resources.getString(R.string.title_favorite)
 
-        view_pager.adapter = FavoritePagerAdapter(this.applicationContext, supportFragmentManager)
-        tab_layout.setupWithViewPager(view_pager)
-        tab_layout.setSelectedTabIndicatorColor(ContextCompat.getColor(applicationContext, R.color.colorAccent))
-        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        binding.viewPager.adapter = FavoritePagerAdapter(this.applicationContext, supportFragmentManager)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
+        binding.tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(applicationContext, R.color.colorAccent))
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                if (tab?.position == 0)
-                    view_pager[0].recycle_view.scrollToPosition(0)
+                /*if (tab?.position == 0)
+                    binding.viewPager[0].recycle_view.scrollToPosition(0)
                 else
-                    view_pager[1].recycle_view.scrollToPosition(0)
+                    binding.viewPager[1].recycle_view.scrollToPosition(0)*/
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {
             }

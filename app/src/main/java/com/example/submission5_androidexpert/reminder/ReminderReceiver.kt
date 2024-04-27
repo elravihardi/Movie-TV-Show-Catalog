@@ -138,7 +138,7 @@ class ReminderReceiver : BroadcastReceiver() {
             context,
             ID_DAILY_ALARM,
             resultIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val builder = NotificationCompat.Builder(context, CHANNEL_DAILY_ID)
             .setContentIntent(resultPendingIntent)

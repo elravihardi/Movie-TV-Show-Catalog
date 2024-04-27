@@ -11,37 +11,42 @@ import com.example.submission5_androidexpert.ConstantVariable.Companion.FRAGMENT
 import com.example.submission5_androidexpert.ConstantVariable.Companion.TVSHOW
 import com.example.submission5_androidexpert.R
 import com.example.submission5_androidexpert.adapter.FavoritePagerAdapter
+import com.example.submission5_androidexpert.databinding.ContainerFavoriteBinding
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.container_favorite.*
-import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class FavoriteContainer : Fragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.container_favorite, container, false)
+    private var _binding: ContainerFavoriteBinding? = null
+    private val binding get() = _binding!!
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = ContainerFavoriteBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.let {
-            view_pager.adapter = FavoritePagerAdapter(it.applicationContext, childFragmentManager)
-            tab_layout.setupWithViewPager(view_pager)
-            tab_layout.setSelectedTabIndicatorColor(
+            binding.viewPager.adapter = FavoritePagerAdapter(it.applicationContext, childFragmentManager)
+            binding.tabLayout.setupWithViewPager(binding.viewPager)
+            binding.tabLayout.setSelectedTabIndicatorColor(
                 ContextCompat.getColor(it.applicationContext,
                 R.color.colorAccent
             ))
         }
         // Check if intent come from Favorite Movie Widget or Favorite TV Show Widget
         if (arguments?.getString(FRAGMENT_ARGUMENT) == TVSHOW){
-            tab_layout.getTabAt(1)?.select()
+            binding.tabLayout.getTabAt(1)?.select()
         }
         // scroll recycle view to top when user reselected tab
-        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                if (tab?.position == 0)
-                    view_pager[0].recycle_view.scrollToPosition(0)
+                /*if (tab?.position == 0)
+                    binding.viewPager[0].recycle_view.scrollToPosition(0)
                 else
-                    view_pager[1].recycle_view.scrollToPosition(0)
+                    binding.viewPager[1].recycle_view.scrollToPosition(0)*/
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {
             }

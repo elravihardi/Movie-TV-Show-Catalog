@@ -1,17 +1,12 @@
 package com.example.submission5_androidexpert.viewmodel
 
 import android.app.Application
-import android.content.Context
 import android.os.Parcelable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.submission5_androidexpert.ConstantVariable.Companion.DAILY_REMINDER_ON
-import com.example.submission5_androidexpert.ConstantVariable.Companion.INITIAL_LAUNCH_PREF
-import com.example.submission5_androidexpert.ConstantVariable.Companion.RELEASE_REMINDER_ON
 import com.example.submission5_androidexpert.model.Movie
 import com.example.submission5_androidexpert.model.TvShow
-import com.example.submission5_androidexpert.reminder.Reminder
 import com.example.submission5_androidexpert.repository.MainRepository
 
 class MainViewModel(app: Application): AndroidViewModel(app) {
@@ -30,32 +25,6 @@ class MainViewModel(app: Application): AndroidViewModel(app) {
 
     init {
         repository.loadMovieList("en")
-        val context = app.applicationContext
-        val isInitialLaunch = context
-            .getSharedPreferences(INITIAL_LAUNCH_PREF, Context.MODE_PRIVATE)
-            .getBoolean(INITIAL_LAUNCH_PREF, true)
-        // This function only run at once for the initial app launch,
-        // because by default all reminders setting will be turned on
-        if (isInitialLaunch) {
-            val alarmReminder = Reminder(context)
-            alarmReminder.turnOnDailyReminder()
-            alarmReminder.turnOnReleaseReminder()
-            context
-                .getSharedPreferences(INITIAL_LAUNCH_PREF, Context.MODE_PRIVATE)
-                .edit()
-                .putBoolean(INITIAL_LAUNCH_PREF, false)
-                .apply()
-            context
-                .getSharedPreferences(RELEASE_REMINDER_ON, Context.MODE_PRIVATE)
-                .edit()
-                .putBoolean(RELEASE_REMINDER_ON, true)
-                .apply()
-            context
-                .getSharedPreferences(DAILY_REMINDER_ON, Context.MODE_PRIVATE)
-                .edit()
-                .putBoolean(DAILY_REMINDER_ON, true)
-                .apply()
-        }
         _movieList = repository.movieList
         _tvshowList = repository.tvshowList
         _releaseMovieList = repository.releaseMovieList

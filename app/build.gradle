@@ -4,13 +4,13 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion 33
+    compileSdk 33
     defaultConfig {
-        applicationId 'com.example.submission5_androidexpert'
+        applicationId 'elravi.hardi.moviecatalog'
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 2
-        versionName "2.0"
+        versionCode 31
+        versionName "3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TMDB_API_KEY", '"a1b33b8ac31d28e75e86ee8b1fb9a339"')
     }

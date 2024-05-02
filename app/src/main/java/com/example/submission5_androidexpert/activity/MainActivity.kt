@@ -195,11 +195,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 startActivity(mIntent)
                 true
             }
-            R.id.reminder_setting -> {
-                val mIntent = Intent(this, ReminderSettingActivity::class.java)
-                startActivity(mIntent)
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }

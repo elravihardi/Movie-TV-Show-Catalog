@@ -1,7 +1,6 @@
 package com.example.submission5_androidexpert.viewmodel
 
 import android.app.Application
-import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -14,8 +13,6 @@ import com.example.submission5_androidexpert.repository.FavoriteRepository
 import com.example.submission5_androidexpert.room.FavoriteMovie
 import com.example.submission5_androidexpert.room.FavoriteRoomDatabase
 import com.example.submission5_androidexpert.room.FavoriteTvShow
-import com.example.submission5_androidexpert.widget.FavoriteMovieWidget
-import com.example.submission5_androidexpert.widget.FavoriteTvShowWidget
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -42,18 +39,7 @@ class FavoriteViewModel(private val appContext: Application): AndroidViewModel(a
     }
 
     private fun updateWidget(kindOfContent: String){
-        val appWidgetManager = AppWidgetManager.getInstance(appContext)
-        if (kindOfContent == MOVIE) {
-            val appWidgetIds = appWidgetManager.getAppWidgetIds(
-                ComponentName(appContext, FavoriteMovieWidget::class.java)
-            )
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stack_view)
-        } else if (kindOfContent == TVSHOW) {
-            val appWidgetIds = appWidgetManager.getAppWidgetIds(
-                ComponentName(appContext, FavoriteTvShowWidget::class.java)
-            )
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stack_view)
-        }
+
     }
 
     fun insertFavMovie(detail: Detail) = viewModelScope.launch(Dispatchers.IO) {

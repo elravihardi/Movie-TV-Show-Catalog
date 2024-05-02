@@ -5,9 +5,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <permission android:name="com.example.submission5_androidexpert.provider.READ_WRITE" />
 
@@ -35,50 +32,6 @@
         <activity
             android:name=".activity.DetailActivity"
             android:parentActivityName=".activity.MainActivity"/>
-        <activity
-            android:name=".activity.ReminderSettingActivity"
-            android:parentActivityName=".activity.MainActivity" />
-
-        <service
-            android:name=".widget.FavMovieWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-        <service
-            android:name=".widget.FavTvShowWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-        <receiver
-            android:name=".reminder.ReminderReceiver"
-            android:enabled="true"
-            android:exported="true" />
-        <receiver android:name=".widget.FavoriteMovieWidget"
-            android:label="@string/fav_movie_widget_banner"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/favorite_movie_widget_info" />
-        </receiver>
-        <receiver android:name=".widget.FavoriteTvShowWidget"
-            android:label="@string/fav_tvshow_widget_banner"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/favorite_tv_show_widget_info" />
-        </receiver>
-
-        <provider
-            android:name=".provider.FavoriteProvider"
-            android:authorities="com.example.submission5_androidexpert.provider"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="com.example.submission5_androidexpert.provider.READ_WRITE" />
     </application>
 
 </manifest>
